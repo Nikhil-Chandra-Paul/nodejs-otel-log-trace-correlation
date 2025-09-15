@@ -2,7 +2,7 @@
 
 const winston = require('winston');
 const { context, trace } = require('@opentelemetry/api');
-const { OpenTelemetryTransportV3 } = require('@opentelemetry/winston-transport');
+const OTLPTransport = require('./otlp-transport');
 
 // Add trace_id and span_id to log entries if available
 const traceFormat = winston.format((info) => {
@@ -29,7 +29,7 @@ const logger = winston.createLogger({
   },
   transports: [
     new winston.transports.Console(),   // logs to console
-    new OpenTelemetryTransportV3(),    // exports logs via OTLP
+    new OTLPTransport(),    // exports logs via OTLP
   ],
 });
 

@@ -3,19 +3,15 @@
 const process = require('process');
 const { NodeSDK } = require('@opentelemetry/sdk-node');
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
-const { OTLPLogExporter } = require('@opentelemetry/exporter-logs-otlp-http');
-const { BatchLogRecordProcessor } = require('@opentelemetry/sdk-logs');
 const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
 const { ExpressInstrumentation } = require('@opentelemetry/instrumentation-express');
 
 // OTLP exporters
 const traceExporter = new OTLPTraceExporter();
-const logExporter = new OTLPLogExporter();
 
 // Configure OpenTelemetry SDK
 const sdk = new NodeSDK({
   traceExporter,
-  logRecordProcessors: [new BatchLogRecordProcessor(logExporter)],
   instrumentations: [
     new HttpInstrumentation(),
     new ExpressInstrumentation(),
